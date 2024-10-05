@@ -21,7 +21,7 @@ $price = $row_product['harga'];
 $total = $price * $jumlah;
 
 // query insert
-$sql = "INSERT INTO transaksi (id, server, produk, jumlah, total, email, whatsapp, tanggal) VALUES ('$id', '$server', $produk, $jumlah, $total, '$email', '$whatsapp', NOW())";
+$sql = "INSERT INTO transaksi (id, server, produk, jumlah, total, email, whatsapp, tanggal, status) VALUES ('$id', '$server', $produk, $jumlah, $total, '$email', '$whatsapp', NOW(), 'pending')";
 
 if ($conn->query($sql) === TRUE) {
     header("Location: ../index.php?berhasil=true&product=$row_product[nama_produk]");

@@ -49,7 +49,7 @@ $products = $conn->query($sql_products);
             }).then((result) => {
                 // reset params
                 if (result.isConfirmed) {
-                    window.location.href = 'index.php';
+                    window.location.href = 'pages/users/riwayat_transaksi.php';
                 }
             })
         </script>
@@ -179,7 +179,7 @@ $products = $conn->query($sql_products);
                     </div>
                     <div class="form-group">
                         <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" value="<?= isset($user['email']) ? $user['email'] : '' ?>" readonly>
                     </div>
                     <div class="form-group">
                         <label for="whatsapp">No WhatsApp:</label>
