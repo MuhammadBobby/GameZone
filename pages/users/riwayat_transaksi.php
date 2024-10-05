@@ -34,11 +34,11 @@ $riwayat = $conn->query($sql_riwayat);
     <div class="container mx-5 my-10">
 
         <main>
-            <h1 class="text-3xl md:text-4xl font-bold">Riwayat Transaksi</h1>
+            <h1 class="text-3xl font-bold md:text-4xl">Riwayat Transaksi</h1>
 
             <?php if ($riwayat->num_rows > 0) : ?>
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 rounded-sm shadow-lg">
+                <div class="relative mt-5 overflow-x-auto shadow-md sm:rounded-lg">
+                    <table class="w-full text-sm text-left text-gray-500 rounded-sm shadow-lg rtl:text-right">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
@@ -66,7 +66,7 @@ $riwayat = $conn->query($sql_riwayat);
                         </thead>
                         <tbody>
                             <?php foreach ($riwayat as $item) : ?>
-                                <tr class="odd:bg-white even:bg-gray-50 border-b">
+                                <tr class="border-b odd:bg-white even:bg-gray-50">
                                     <th scope="row" class="px-6 py-4 font-bold text-gray-900 whitespace-nowrap">
                                         <?= $item['id'] ?>
                                     </th>
@@ -91,7 +91,7 @@ $riwayat = $conn->query($sql_riwayat);
                                     </td>
                                     <td class="px-6 py-4">
                                         <a href="#">
-                                            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Laporkan</button>
+                                            <button class="px-4 py-2 font-bold text-white bg-red-500 rounded hover:bg-red-700">Laporkan</button>
                                         </a>
                                     </td>
                                 </tr>
@@ -100,17 +100,17 @@ $riwayat = $conn->query($sql_riwayat);
                     </table>
                 </div>
             <?php else : ?>
-                <p class="text-center my-10 text-red-500">Tidak ada riwayat transaksi</p>
+                <p class="my-10 text-center text-red-500">Tidak ada riwayat transaksi</p>
             <?php endif; ?>
         </main>
 
         <div class="mt-10">
-            <p class="text-center font-medium text-lg">Jika terjadi kendala hubungi Layanan CS</p>
+            <p class="text-lg font-medium text-center">Jika terjadi kendala hubungi Layanan CS</p>
             <?php include '../../footer.php' ?>
         </div>
     </div>
 
-    <a href="../../index.php" class="fixed bottom-10 right-10 border-2 border-yellow-500 rounded-full p-3 hover:scale-105 transition-all">
+    <a href="../../index.php" class="fixed p-3 transition-all border-2 border-yellow-500 rounded-full bottom-10 right-10 hover:scale-105">
         <img src="../../images/home.png" alt="home" title="Home">
     </a>
 </body>

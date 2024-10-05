@@ -3,9 +3,9 @@ session_start();
 require 'connect.php';
 
 // Ambil data dari form signup
-$email = $_POST['email'];
-$pass = $_POST['password'];
-$pass_confirm = $_POST['password_confirm'];
+$email = htmlspecialchars($_POST['email']);
+$pass = htmlspecialchars($_POST['password']);
+$pass_confirm = htmlspecialchars($_POST['password_confirm']);
 
 // Cek apakah password dan password confirm cocok
 if ($pass !== $pass_confirm) {

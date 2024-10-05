@@ -3,8 +3,8 @@ session_start();
 require 'connect.php';
 
 // Ambil data dari form login
-$email = $_POST['email'];
-$pass = $_POST['password'];
+$email = htmlspecialchars($_POST['email']);
+$pass = htmlspecialchars($_POST['password']);
 
 // Query untuk mencari pengguna berdasarkan email
 $sql = "SELECT * FROM user WHERE email='$email'";
