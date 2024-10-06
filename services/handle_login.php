@@ -20,12 +20,19 @@ if ($result->num_rows > 0) {
         $_SESSION['login'] = true;
         $_SESSION['email'] = $row['email'];
         $_SESSION['id_user'] = $row['id_user'];
+        $_SESSION['role'] = $row['role'];
 
-        // Redirect ke halaman user.html
-        header("Location: ../index.php");
-        exit();
+        // Redirect ke halaman yang sesuai
+        if ($row['role'] === 'admin') {
+            header("Location: ../pages/admin/dashboard.php");
+            exit();
+        } else if ($row['role'] === 'member') {
+            header("Location: ../index.php");
+            exit();
+        }
     } else {
-        echo "Invalid password.";
+        header("Location: ../login.php?error=login_failed");
+        exit();
     }
 } else {
     header("Location: ../login.php?error=login_failed");

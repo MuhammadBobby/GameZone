@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 02, 2024 at 11:29 AM
+-- Generation Time: Oct 06, 2024 at 07:06 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,19 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin`
---
-
-CREATE TABLE `admin` (
-  `id_admin` int(11) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `pasword` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `produk`
 --
 
@@ -44,29 +31,30 @@ CREATE TABLE `produk` (
   `id_produk` int(11) NOT NULL,
   `nama_produk` varchar(50) NOT NULL,
   `harga` int(12) NOT NULL,
-  `stok` int(11) NOT NULL
+  `diskon` int(11) DEFAULT NULL,
+  `image` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `produk`
 --
 
-INSERT INTO `produk` (`id_produk`, `nama_produk`, `harga`, `stok`) VALUES
-(1, '11 Diamond', 2550, 99),
-(2, '14 Diamond', 4250, 99),
-(3, '28 Diamond', 7650, 99),
-(4, '86 Diamond', 19800, 99),
-(5, '172 Diamond', 38700, 99),
-(6, '257 Diamond', 58500, 99),
-(7, '344 Diamond', 76500, 99),
-(8, '429 Diamond', 94500, 99),
-(9, '514 Diamond', 115000, 99),
-(10, '600 Diamond', 138000, 99),
-(11, '706 Diamond', 156400, 99),
-(12, '878 Diamond', 193200, 99),
-(13, '963 Diamond', 211600, 99),
-(14, 'Weekly', 25760, 99),
-(15, 'Twilight Pass', 12700, 99);
+INSERT INTO `produk` (`id_produk`, `nama_produk`, `harga`, `diskon`, `image`) VALUES
+(1, '11 Diamond', 2550, 15, 'diamond.png'),
+(2, '14 Diamond', 4250, 15, 'diamond.png'),
+(3, '28 Diamond', 7650, 15, 'diamond.png'),
+(4, '86 Diamond', 19800, 10, 'diamond.png'),
+(5, '172 Diamond', 38700, 10, 'diamond.png'),
+(6, '257 Diamond', 58500, 10, 'diamond.png'),
+(7, '344 Diamond', 76500, 9, 'diamond.png'),
+(8, '429 Diamond', 94500, 10, 'diamond.png'),
+(9, '514 Diamond', 115000, 8, 'diamond.png'),
+(10, '600 Diamond', 138000, 8, 'diamond.png'),
+(11, '706 Diamond', 156400, 8, 'diamond.png'),
+(12, '878 Diamond', 193200, 8, 'diamond.png'),
+(13, '963 Diamond', 211600, 8, 'diamond.png'),
+(14, 'Weekly', 25760, 8, 'weekly.png'),
+(15, 'Twilight Pass', 12700, 8, 'twilight.png');
 
 -- --------------------------------------------------------
 
@@ -75,7 +63,7 @@ INSERT INTO `produk` (`id_produk`, `nama_produk`, `harga`, `stok`) VALUES
 --
 
 CREATE TABLE `transaksi` (
-  `id_transaksi` varchar(50) NOT NULL,
+  `id_transaksi` int(11) NOT NULL,
   `id` varchar(50) NOT NULL,
   `server` varchar(50) NOT NULL,
   `produk` int(11) NOT NULL,
@@ -83,7 +71,9 @@ CREATE TABLE `transaksi` (
   `total` int(11) NOT NULL,
   `email` varchar(50) NOT NULL,
   `whatsapp` varchar(50) NOT NULL,
-  `tanggal` datetime NOT NULL
+  `tanggal` datetime NOT NULL,
+  `status` enum('pending','proses','sukses','batal') DEFAULT NULL,
+  `bukti_pembayaran` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -94,26 +84,24 @@ CREATE TABLE `transaksi` (
 
 CREATE TABLE `user` (
   `id_user` int(11) NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
   `email` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL
+  `password` varchar(50) NOT NULL,
+  `role` enum('member','admin') NOT NULL DEFAULT 'member'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id_user`, `email`, `password`) VALUES
-(1, 'asirafgan@gmail.com', 'Nadhima123');
+INSERT INTO `user` (`id_user`, `name`, `email`, `password`, `role`) VALUES
+(1, 'test', 'asirafgan@gmail.com', 'Nadhima123', 'member'),
+(3, 'Admin', 'admin@gmail.com', '12345678', 'admin'),
+(5, 'Yayaa', 'yayaa@gmail.com', '12345678', 'member');
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id_admin`);
 
 --
 -- Indexes for table `produk`
@@ -139,22 +127,22 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT for table `admin`
---
-ALTER TABLE `admin`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `transaksi`
+--
+ALTER TABLE `transaksi`
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables

@@ -26,7 +26,7 @@
             }).then((result) => {
                 // reset params
                 if (result.isConfirmed) {
-                    window.location.href = 'register.php';
+                    window.location.href = 'login.php';
                 }
             })
         </script>

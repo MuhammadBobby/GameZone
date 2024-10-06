@@ -113,14 +113,6 @@ $products = $conn->query($sql_products);
             <?php foreach ($products as $product) :
                 // Penghitungan old price
                 $old_price = $product['harga'] + round($product['harga'] * $product['diskon'] / 100);
-                // Image
-                if ($product['nama_produk'] == 'Weekly') {
-                    $image = 'images/weekly.png';
-                } elseif ($product['nama_produk'] == 'Twilight Pass') {
-                    $image = 'images/twilight.png';
-                } else {
-                    $image = 'images/diamond.png';
-                }
             ?>
                 <div class="card w-full md:w-[32%]">
                     <div class="details">
@@ -128,7 +120,7 @@ $products = $conn->query($sql_products);
                         <div class="price">Rp <?= number_format($product['harga'], 0, ',', '.') ?></div>
                         <div class="old-price">Rp <?= number_format($old_price, 0, ',', '.') ?></div>
                     </div>
-                    <img src="<?= $image ?>" alt="<?= $product['nama_produk'] ?>" width="50" height="50" />
+                    <img src="images/<?= $product['image'] ?>" alt="<?= $product['nama_produk'] ?>" width="50" height="50" />
                     <div class="discount"><?= $product['diskon'] ?>% OFF</div>
                 </div>
             <?php endforeach; ?>

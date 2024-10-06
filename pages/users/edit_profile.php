@@ -17,9 +17,14 @@
             </div>
             <!-- Modal body -->
             <form action="services/update_profile.php" method="POST" class="p-4 md:p-5">
+                <p class="px-3 py-2 mb-8 text-white bg-red-500 rounded-md">Perubahan pada email dapat mengakibatkan riwayat transaksi anda terhapus!</p>
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     <div class="col-span-2">
-                        <label for="new_email" class="block mb-2 text-sm font-medium text-white">Name</label>
+                        <label for="new_name" class="block mb-2 text-sm font-medium text-white">Name</label>
+                        <input type="text" name="new_name" id="new_name" class=" text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-white border-gray-500 placeholder-gray-800 text-black focus:ring-primary-500 focus:border-primary-500" value=<?= $user['name'] ?> required="">
+                    </div>
+                    <div class="col-span-2">
+                        <label for="new_email" class="block mb-2 text-sm font-medium text-white">Email</label>
                         <input type="email" name="new_email" id="new_email" class=" text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-white border-gray-500 placeholder-gray-800 text-black focus:ring-primary-500 focus:border-primary-500" value=<?= $user['email'] ?> required="">
                     </div>
                 </div>

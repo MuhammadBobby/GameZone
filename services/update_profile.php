@@ -4,7 +4,8 @@ require 'connect.php';
 require 'function_cek_login.php';
 
 // Ambil data dari form edit
-$new_email = $_POST['new_email'];
+$new_name = htmlspecialchars($_POST['new_name']);
+$new_email = htmlspecialchars($_POST['new_email']);
 
 // cek apakah email sudah terdaftar
 $sql = "SELECT * FROM user WHERE email = '$new_email'";
@@ -15,7 +16,7 @@ if ($result->num_rows > 0) {
 }
 
 // Query untuk memperbarui email dan password
-$sql = "UPDATE user SET email='$new_email' WHERE id_user = " . $_SESSION['id_user'];
+$sql = "UPDATE user SET email='$new_email', name='$new_name' WHERE id_user = " . $_SESSION['id_user'];
 
 if ($conn->query($sql) === TRUE) {
     // Update session email

@@ -15,7 +15,16 @@
                     </button>
                     <!-- Dropdown menu -->
                     <div id="dropdownNavbar" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+                        <h2 class="px-4 py-3 text-[#3b206b] font-bold"><?= $user['name'] ?></h2>
+                        <hr>
                         <ul class="py-2 text-sm text-black" aria-labelledby="dropdownLargeButton">
+                            <?php if ($user['role'] == 'admin') : ?>
+                                <li>
+                                    <a href="pages/admin/dashboard.php" class="text-[#3b206b] font-semibold block px-4 py-2 hover:bg-gray-100">
+                                        Dashboard
+                                    </a>
+                                </li>
+                            <?php endif; ?>
                             <li>
                                 <button data-modal-target="profile-modal" data-modal-toggle="profile-modal" class="block w-full px-4 py-2 text-left hover:bg-gray-100">Profile</button>
                             </li>

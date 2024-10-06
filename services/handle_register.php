@@ -3,6 +3,7 @@ session_start();
 require 'connect.php';
 
 // Ambil data dari form signup
+$name = htmlspecialchars($_POST['name']);
 $email = htmlspecialchars($_POST['email']);
 $pass = htmlspecialchars($_POST['password']);
 $pass_confirm = htmlspecialchars($_POST['password_confirm']);
@@ -20,7 +21,7 @@ $result = $conn->query($sql);
 // Jika email belum terdaftar, lakukan pendaftaran
 if ($result->num_rows === 0) {
     // Query untuk menambahkan pengguna baru
-    $sql = "INSERT INTO user (email, password) VALUES ('$email', '$pass')";
+    $sql = "INSERT INTO user (name, email, password) VALUES ('$name', '$email', '$pass')";
 
     if ($conn->query($sql) === TRUE) {
 
@@ -30,7 +31,8 @@ if ($result->num_rows === 0) {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
 } else {
-    echo "Email sudah terdaftar.";
+    header("Location: ../register.php?error=email_exist");
+    exit();
 }
 
 // Tutup koneksi
