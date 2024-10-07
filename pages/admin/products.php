@@ -89,7 +89,17 @@ $products = $conn->query($sql_products);
                                     </p>
                                 </td>
                                 <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                    <button type="button" data-modal-target="edit-product-modal" data-modal-toggle="edit-product-modal" class="px-3 py-2 mr-2 text-black bg-yellow-500 rounded hover:bg-yellow-600">Edit</button>
+                                    <!-- edit -->
+                                    <button type="button"
+                                        data-modal-target="edit-product-modal-<?= $product['id_produk'] ?>"
+                                        data-modal-toggle="edit-product-modal-<?= $product['id_produk'] ?>"
+                                        data-id="<?= $product['id_produk'] ?>"
+                                        data-nama="<?= $product['nama_produk'] ?>"
+                                        data-harga="<?= $product['harga'] ?>"
+                                        data-diskon="<?= $product['diskon'] ?>"
+                                        class="px-3 py-2 mr-2 text-black bg-yellow-500 rounded hover:bg-yellow-600">Edit</button>
+
+                                    <!-- delete -->
                                     <a href="services/delete_product.php?id=<?= $product['id_produk'] ?>" class="px-3 py-2 text-white bg-red-500 rounded hover:bg-red-600" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
                                 </td>
 
@@ -104,6 +114,28 @@ $products = $conn->query($sql_products);
     </main>
 
     <?php include 'components/js.php'; ?>
+    <script>
+        document.querySelectorAll('button[data-modal-toggle^="edit-product-modal"]').forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-id');
+                const productName = this.getAttribute('data-nama');
+                const productPrice = this.getAttribute('data-harga');
+                const productDiscount = this.getAttribute('data-diskon');
+
+                // Cari modal terkait berdasarkan product ID
+                const modal = document.querySelector(`#edit-product-modal-${productId}`);
+
+                // Isi nilai default form modal
+                modal.querySelector('#id_produk').value = productId;
+                modal.querySelector('#nama_produk').value = productName;
+                modal.querySelector('#harga').value = productPrice;
+                modal.querySelector('#diskon').value = productDiscount;
+
+                // Buka modal
+                modal.classList.remove('hidden');
+            });
+        });
+    </script>
 </body>
 
 </html>

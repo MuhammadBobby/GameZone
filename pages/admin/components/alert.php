@@ -13,6 +13,19 @@
              }
          })
      </script>
+ <?php } else if (isset($_GET['updated']) == 'update_product_success') { ?>
+     <script>
+         Swal.fire({
+             icon: 'success',
+             title: 'Sukses',
+             text: 'Produk berhasil diupdate!',
+         }).then((result) => {
+             // reset params
+             if (result.isConfirmed) {
+                 window.location.href = 'products.php';
+             }
+         })
+     </script>
  <?php } else if (isset($_GET['delete']) == 'delete_product_success') { ?>
      <script>
          Swal.fire({
@@ -71,6 +84,19 @@
              icon: 'error',
              title: 'Gagal',
              text: 'Produk tidak ditemukan! Klik tombol "Refresh" untuk memuat ulang halaman!',
+         }).then((result) => {
+             // reset params
+             if (result.isConfirmed) {
+                 window.location.href = 'products.php';
+             }
+         })
+     </script>
+ <?php } else if (isset($_GET['error']) == 'update_product_failed') { ?>
+     <script>
+         Swal.fire({
+             icon: 'error',
+             title: 'Gagal',
+             text: 'Produk gagal diupdate!',
          }).then((result) => {
              // reset params
              if (result.isConfirmed) {
