@@ -12,6 +12,14 @@ $jumlah = htmlspecialchars($_POST['jumlah']);
 $email = htmlspecialchars($_POST['email']);
 $whatsapp = htmlspecialchars($_POST['whatsapp']);
 
+// cek apakah user tidak melakukan transdaksi sebelum transaksi lain tidak pending
+$sql_cek = "SELECT * FROM transaksi WHERE email = '$email' AND status = 'pending'";
+$cek = $conn->query($sql_cek);
+if ($cek->num_rows > 0) {
+    header("Location: ../index.php?cek=transaction_exist");
+    exit();
+}
+
 // total
 // ambil data dari produk
 $sql_product = "SELECT * FROM produk WHERE id_produk = '$produk'";

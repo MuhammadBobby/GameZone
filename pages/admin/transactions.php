@@ -28,8 +28,63 @@ $transctions = $conn->query($sql_transactions);
 </head>
 
 <body class="flex bg-gray-100">
-    <?php include 'components/aside.php' ?>
+    <!-- alert -->
+    <?php if (isset($_GET['confirm'])) : ?>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Sukses',
+                text: 'Transaksi berhasil di konfirmasi!',
+            }).then((result) => {
+                // reset params
+                if (result.isConfirmed) {
+                    window.location.href = 'transactions.php';
+                }
+            })
+        </script>
+    <?php elseif (isset($_GET['cancel'])) : ?>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: 'Berhasil Membatalkan Transaksi!',
+            }).then((result) => {
+                // reset params
+                if (result.isConfirmed) {
+                    window.location.href = 'transactions.php';
+                }
+            })
+        </script>
+    <?php elseif (isset($_GET['delete'])) : ?>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: 'Berhasil Menghapus Transaksi!',
+            }).then((result) => {
+                // reset params
+                if (result.isConfirmed) {
+                    window.location.href = 'transactions.php';
+                }
+            })
+        </script>
+    <?php elseif (isset($_GET['error'])) : ?>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: 'Terjadi kesalahan, silahkan coba lagi!',
+            }).then((result) => {
+                // reset params
+                if (result.isConfirmed) {
+                    window.location.href = 'transactions.php';
+                }
+            })
+        </script>
+    <?php endif; ?>
 
+
+    <?php include 'components/aside.php' ?>
 
     <main class="relative w-full max-h-full p-4">
         <!-- Header -->
@@ -40,6 +95,7 @@ $transctions = $conn->query($sql_transactions);
             <p class="flex items-center pb-3 text-xl">
                 <i class="mr-3 fas fa-list"></i> Table of Transaction
             </p>
+            <button type="button" data-modal-target="report-modal" data-modal-toggle="report-modal" class="text-white inline-flex items-center gap-0 focus:outline-none font-medium rounded-lg text-sm px-8 py-2.5 text-center bg-blue-500 hover:bg-blue-600 focus:ring-blue-700 my-3">Print Report Transactions</button>
             <div class="overflow-auto bg-white">
                 <table class="min-w-full leading-normal">
                     <thead>
@@ -146,9 +202,21 @@ $transctions = $conn->query($sql_transactions);
                                     </p>
                                 </td>
                                 <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                    <a href="" class="px-3 py-2 mr-2 text-white bg-gray-500 rounded hover:bg-gray-600">Detail</a>
-                                    <a href="" class="px-3 py-2 mr-2 text-black bg-yellow-500 rounded hover:bg-yellow-600">Edit</a>
-                                    <a href="" class="px-3 py-2 text-white bg-red-500 rounded hover:bg-red-600">Delete</a>
+                                    <?php if ($transaction['status'] == 'pending') : ?>
+                                        <p class="text-gray-900 whitespace-no-wrap">Menunggu Proses pembayaran</p>
+                                    <?php elseif ($transaction['status'] == 'proses') : ?>
+                                        <div class="flex flex-col items-center gap-1">
+                                            <!-- konfirmasi -->
+                                            <a href="services/transaction_confirm.php?id=<?= $transaction['id_transaksi'] ?>" class="px-3 py-2 mr-2 text-black bg-green-500 rounded hover:bg-green-600" onclick="return confirm('Apakah anda yakin ingin mengkonfirmasi transaksi?\nMohon pastikan transaksi telah dibayar dan berhasil dikirimkan!')">Konfirmasi Transaksi</a>
+                                            <!-- batalkan -->
+                                            <a href="services/transaction_cancel.php?id=<?= $transaction['id_transaksi'] ?>" class="px-3 py-2 mr-2 text-black bg-red-500 rounded hover:bg-red-600" onclick="return confirm('Apakah anda yakin ingin membatalkan transaksi?')">Batalkan Transaksi</a>
+                                        </div>
+                                    <?php elseif ($transaction['status'] == 'sukses') : ?>
+                                        <!-- delete -->
+                                        <a href="services/delete_transaction.php?id=<?= $transaction['id_transaksi'] ?>" class="px-3 py-2 mr-2 text-black bg-red-500 rounded hover:bg-red-600" onclick="return confirm('Apakah anda yakin ingin membatalkan transaksi?')">Delete</a>
+                                    <?php elseif ($transaction['status'] == 'batal') : ?>
+                                        <a href="services/delete_transaction.php?id=<?= $transaction['id_transaksi'] ?>" class="px-3 py-2 mr-2 text-black bg-red-500 rounded hover:bg-red-600" onclick="return confirm('Apakah anda yakin ingin membatalkan transaksi?')">Delete</a>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -158,7 +226,10 @@ $transctions = $conn->query($sql_transactions);
         </div>
     </main>
 
+    <?php include 'components/report_modal.php' ?>
     <?php include 'components/js.php'; ?>
+    <!-- flowbite js -->
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
 
 </html>
