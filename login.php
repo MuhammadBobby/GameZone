@@ -38,6 +38,30 @@
                 text: 'Silahkan login menggunakan email dan password!',
             })
         </script>
+    <?php } else if (isset($_GET['error']) == 'pass_not_match') { ?>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal Konfirmasi Password',
+                text: 'Password yang dimasukkan tidak cocok atau tidak sama!',
+            })
+        </script>
+    <?php } else if (isset($_GET['reset']) == 'reset_success') { ?>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Reset Password Berhasil',
+                text: 'Silahkan login menggunakan email dan password yang baru!',
+            })
+        </script>
+    <?php } else if (isset($_GET['reset']) == 'reset_failed') { ?>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal reset Password',
+                text: 'Email yang dimasukkan tidak terdaftar!',
+            })
+        </script>
     <?php } ?>
 
     <section class="bg-image bg-cover bg-[#3b206b] bg-blend-multiply" style="background-image: url('images/bacground.jpg');">
@@ -60,6 +84,9 @@
                             <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-[#3b206b] focus:border-[#3b206b] block w-full p-2.5" required="">
                         </div>
 
+                        <!-- forgot password -->
+                        <p class="text-sm font-light text-gray-500 dark:text-gray-400">Forgot password? <button type="button" data-modal-target="forgot-modal" data-modal-toggle="forgot-modal" class="font-medium text-[#3b206b] hover:underline dark:text-primary-500">Reset password</button></p>
+
                         <button type="submit" class="w-full text-white bg-[#3b206b] hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Sign in</button>
                         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                             Don’t have an account yet? <a href="register.php" class="font-medium text-[#3b206b] hover:underline dark:text-primary-500">Sign up</a>
@@ -70,6 +97,8 @@
         </div>
     </section>
 
+    <!-- modal -->
+    <?php include 'pages/users/forgot_password.php' ?>
     <!-- flowbite js -->
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
